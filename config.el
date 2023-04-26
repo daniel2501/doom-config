@@ -150,18 +150,6 @@
 
 (add-hook 'auto-save-hook 'save-buffer-if-visiting-file)
 
-;; (require 'org-gcal)
-;; (setq org-gcal-client-id "243599653861-ajjl2s8blg10h8s4fs9qrk8ive4hompn.apps.googleusercontent.com"
-;;       org-gcal-client-secret "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"
-;;       org-gcal-fetch-file-alist '(("daniel2501@gmail.com" .  "~/6c95c-5f5bg/roam/20220416185035-gcal_events.org")))
-;;                                   ;; ("f2062k14iomk333kbl5lre98m0@group.calendar.google.com" .  "~/6c95c-5f5bg/roam/20220416185056-gcal_schedule.org")))
-;; ;; 4/1AX4XfWgXfebAUJM0u14lfAt9Ml-UvcsU62kP3Wjw-tbm2nU1gWE_GKQo1Lw
-
-;; ;; calfw
-;; (require 'calfw-cal)
-;; (require 'calfw-org)
-
-
 ;; Ibuffer side bar
 
 ;; (use-package ibuffer-sidebar

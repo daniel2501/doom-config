@@ -25,7 +25,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-henna)
+(setq doom-theme 'doom-ir-black)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -85,20 +85,6 @@
       window-divider-default-bottom-width 9)
 (window-divider-mode)
 
-(global-set-key (kbd "C-x <left>")  'windmove-left)
-(global-set-key (kbd "C-x <right>") 'windmove-right)
-(global-set-key (kbd "C-x <up>")    'windmove-up)
-(global-set-key (kbd "C-x <down>")  'windmove-down)
-(global-set-key (kbd "M-<up>")      'org-move-item-up)
-(global-set-key (kbd "M-<down>")    'org-move-item-down)
-
-(global-set-key (kbd "C-x J")       'windmove-swap-states-up)
-(global-set-key (kbd "C-x K")       'windmove-swap-states-down)
-(global-set-key (kbd "C-x L")       'windmove-swap-states-right)
-(global-set-key (kbd "C-x H")       'windmove-swap-states-left)
-
-(global-set-key (kbd "C-x RET RET") '+vterm/here)
-
 (map! :leader
       "d <left>"
       (cmd! (windmove-delete-left)))
@@ -126,29 +112,17 @@
 ;; Roam
 (map! :leader
       "r f"
-      (cmd! (org-roam-find-file)))
+      (cmd! (org-roam-node-find)))
 (map! :leader
       "r r"
-      (cmd! (org-roam)))
+      (cmd! (org-roam-buffer-toggle)))
 (map! :leader
       "r i"
-      (cmd! (org-roam-insert)))
-(map! :leader
-      "r I"
-      (cmd! (org-roam-insert-immediate)))
+      (cmd! (org-roam-node-insert)))
 (map! :leader
       "r b"
-      (cmd! (org-roam-switch-to-buffer)))
+      (cmd! (org-roam-buffer-list)))
 
-;; Actual auto-save
-(auto-save-visited-mode)
-(defun save-buffer-if-visiting-file (&optional args)
-   "Save the current buffer only if it is visiting a file"
-   (interactive)
-   (if (and (buffer-file-name) (buffer-modified-p))
-       (save-buffer args)))
-
-(add-hook 'auto-save-hook 'save-buffer-if-visiting-file)
 
 ;; Ibuffer side bar
 

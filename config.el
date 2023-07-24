@@ -22,6 +22,7 @@
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
+(setq doom-font (font-spec :family "NotoMono Nerd Font" :size 18 :weight 'medium))
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
@@ -162,3 +163,11 @@
       (cmd! (next-buffer)))
 
 (setq org-roam-buffer-width 0.13)
+
+;; exwm
+;; (require 'exwm)
+;; (require 'exwm-config)
+;; (exwm-config-example)
+
+;; To do priorities
+(setq org-lowest-priority 90)

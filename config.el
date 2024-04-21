@@ -76,11 +76,11 @@
 ;; Let deft search files under root org directory.
 ;; We could use the org-directory variable instead of duplicating values
 (setq deft-directory "~/org"
-   deft-recursive t
-   ;; I don't like any summary, hence catch-all regexp. need to see if
-   ;; an option to hide summary is there instead of this one.
-   deft-strip-summary-regexp ".*$"
-)
+      deft-recursive t
+      ;; I don't like any summary, hence catch-all regexp. need to see if
+      ;; an option to hide summary is there instead of this one.
+      deft-strip-summary-regexp ".*$"
+      )
 
 (setq window-divider-default-right-width  9
       window-divider-default-bottom-width 9)
@@ -171,3 +171,8 @@
 
 ;; To do priorities
 (setq org-lowest-priority 90)
+
+;; Autosave - org files only
+(run-with-idle-timer 3 t #'save-some-buffers t #'(lambda () (eq major-mode 'org-mode)))
+(add-hook! 'focus-out-hook (save-some-buffers t #'(lambda () (eq major-mode 'org-mode))))
+(add-hook! 'switch-frame (save-some-buffers t #'(lambda () (eq major-mode 'org-mode))))

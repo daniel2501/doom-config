@@ -48,3 +48,12 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+(package! codeium :recipe (:host github :repo "Exafunction/codeium.el"))
+(package! yalinum)
+(package! x86-lookup)
+(package! nasm-mode)
+(package! nano-theme)
+(package! uwu-theme)
+(package! darktooth-theme)
+;; Install liningen linux package for ejc-sql to get Clojure
+(package! ejc-sql)

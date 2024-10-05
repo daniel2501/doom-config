@@ -22,11 +22,11 @@
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
-(setq doom-font (font-spec :family "NotoMono Nerd Font" :size 18 :weight 'medium))
+(setq doom-font (font-spec :family "NotoMono Nerd Font" :size 18))
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-ir-black)
+(setq doom-theme 'darktooth)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -34,7 +34,12 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 1)
+
+;; yalinum must be installed
+(global-yalinum-mode 't)
+
+(setq standard-indent 2)
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -171,3 +176,86 @@
 
 ;; To do priorities
 (setq org-lowest-priority 90)
+
+;; Dired auto-revert
+(setq dired-auto-revert-buffer 1)
+
+;; Original (doom) org-ascii-bullets
+;; ((ascii 42 43 45)
+;;  (latin1 167 182)
+;;  (utf-8 9674))
+
+;; No numbers when exporting to ascii, html, pdf, etc.
+(setq org-export-with-section-numbers nil)
+(setq org-export-with-author nil)
+(setq org-export-with-toc nil)
+
+;; Todo states
+(setq org-todo-keywords '((sequence "TODO" "RLLY" "EXPD" "BLKD" "PROG" "YES" "NO" "|" "DONE")
+                          (sequence "[ ]" "[-]" "[?]" "|" "[X]")))
+;; Agenda files
+(setq org-agenda-files '("~/org" "~/org/daily"))
+
+;; Autosave - org files only
+(run-with-idle-timer 3 t #'save-some-buffers t #'(lambda () (eq major-mode 'org-mode)))
+(add-hook! 'focus-out-hook (save-some-buffers t #'(lambda () (eq major-mode 'org-mode))))
+(add-hook! 'switch-frame (save-some-buffers t #'(lambda () (eq major-mode 'org-mode))))
+
+;; Org table stuff
+(map! :leader
+      "m b d d"
+      'org-table-cut-region)
+      ;; For some reason, the leading single quote style is needed for the commend or this gives a wrond number of arguments error.
+(map! :leader
+      "m b p"
+      (cmd! (org-table-paste-rectangle)))
+(map! :leader
+      "m b y"
+      'org-table-copy-region)
+
+
+(setq org-startup-folded 'show2levels)
+
+(setq doom-modeline-major-mode-icon t)
+(setq doom-modeline-major-mode-color-icon nil)
+(setq doom-modeline-check-icon t)
+(after! doom-modeline
+  (doom-modeline-def-modeline 'main
+    '(bar matches buffer-info remote-host buffer-position selection-info)
+    '(bar misc-info minor-modes input-method buffer-encoding check major-mode process vcs battery "      "))) ; <-- added padding hereA
+
+;; Assembly stuff
+(use-package x86-lookup
+  :ensure t
+  :config
+  (setq  x86-lookup-pdf "~/org/pdf/64-iA32-Instruction-set-reference-vol2.pdf")
+  )
+(use-package nasm-mode
+  :ensure t
+  :config
+  (add-hook 'asm-mode-hook 'nasm-mode)
+  )
+
+;; Visidata
+
+;; Babel
+(with-eval-after-load 'org
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sql . t))))
+
+;; ejc-sql
+(require 'ejc-sql)
+(setq ejc-result-table-impl 'orgtbl-mode)
+;; (setq ejc-org-mode-show-results nil)
+(ejc-create-connection
+ "snowflake"
+ :classpath "/home/daniel/.m2/repository/com/snowflake/jdbc/snowflake-jdbc-3.19.0.jar"
+ :connection-uri (concat "jdbc:snowflake://oojagrk-dev_lab_1.snowflakecomputing.com:443"
+                         "?user=admin"
+                         "&password=2501Cthia~"
+                         "&warehouse=airbyte_compute_wh"
+                         "&role=accountadmin"
+                         "&db=snowflake"
+                         "&authenticator=snowflake"
+                         "&JDBC_QUERY_RESULT_FORMAT=JSON"))
